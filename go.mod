@@ -1,10 +1,11 @@
-module ithub.com/vterebey/chat-server
+module github.com/vterebey/chat-server
 
 go 1.21
 
 toolchain go1.22.4
 
 require (
+	github.com/brianvoe/gofakeit v3.18.0+incompatible
 	github.com/fatih/color v1.15.0
 	google.golang.org/grpc v1.65.0
 	google.golang.org/protobuf v1.34.2
