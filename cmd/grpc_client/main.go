@@ -3,13 +3,14 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
+	"time"
+
 	"github.com/brianvoe/gofakeit"
 	desc "github.com/vterebey/chat-server/pkg/chat_v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/protobuf/types/known/timestamppb"
-	"log"
-	"time"
 )
 
 const (
@@ -73,6 +74,7 @@ func main() {
 	}
 }
 
+// CreateChat creates new chat
 func CreateChat(ctx context.Context, client desc.ChatV1Client) (*desc.CreateChatResponse, error) {
 	chat := &desc.ChatInfo{
 		Name:     "TestChat",
@@ -95,6 +97,7 @@ func CreateChat(ctx context.Context, client desc.ChatV1Client) (*desc.CreateChat
 	return resp, nil
 }
 
+// DeleteChat deletes existing chat
 func DeleteChat(ctx context.Context, client desc.ChatV1Client) error {
 	id := gofakeit.Int64()
 
@@ -107,6 +110,7 @@ func DeleteChat(ctx context.Context, client desc.ChatV1Client) error {
 	return nil
 }
 
+// ListChats lists all the chats
 func ListChats(ctx context.Context, client desc.ChatV1Client) (*desc.ListChatsResponse, error) {
 
 	resp, err := client.ListChats(ctx, &desc.ListChatsRequest{})
@@ -117,6 +121,7 @@ func ListChats(ctx context.Context, client desc.ChatV1Client) (*desc.ListChatsRe
 	return resp, nil
 }
 
+// Connect connects to chat
 func Connect(ctx context.Context, client desc.ChatV1Client) error {
 	ID := gofakeit.Int64()
 	resp, err := client.Connect(ctx, &desc.ConnectRequest{Id: ID})
@@ -127,6 +132,7 @@ func Connect(ctx context.Context, client desc.ChatV1Client) error {
 	return nil
 }
 
+// SendMessage sends message
 func SendMessage(ctx context.Context, client desc.ChatV1Client) error {
 	message := &desc.Message{From: gofakeit.Int64(), Text: gofakeit.BeerName(), Timestamp: timestamppb.New(time.Now())}
 
@@ -139,6 +145,7 @@ func SendMessage(ctx context.Context, client desc.ChatV1Client) error {
 	return nil
 }
 
+// AddUser adds user to chat
 func AddUser(ctx context.Context, client desc.ChatV1Client) error {
 	user := &desc.UserInfo{Name: gofakeit.Name(), Email: gofakeit.Email(), State: desc.UserState_USER_ACTIVE}
 
@@ -151,6 +158,7 @@ func AddUser(ctx context.Context, client desc.ChatV1Client) error {
 	return nil
 }
 
+// BanUser bans user
 func BanUser(ctx context.Context, client desc.ChatV1Client) error {
 	ID := gofakeit.Int64()
 
@@ -163,6 +171,7 @@ func BanUser(ctx context.Context, client desc.ChatV1Client) error {
 	return nil
 }
 
+// ListUsers list all the users
 func ListUsers(ctx context.Context, client desc.ChatV1Client) (*desc.ListUsersResponse, error) {
 	ID := gofakeit.Int64()
 
